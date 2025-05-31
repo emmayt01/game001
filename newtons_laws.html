@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牛頓運動定律與動量守恆 - 互動學習</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --background-color: #e6eef2;
+            --text-color: #333;
+            --section-bg: #f5f9fc;
+            --nav-bg: #2c3e50;
+            --nav-text: #ecf0f1;
+            --nav-active: #3498db;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', 'Heiti TC', 'Apple LiGothic', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 30px 0 15px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin: 20px 0 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .formula {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-left: 4px solid var(--primary-color);
+            margin: 15px 0;
+            font-family: 'Cambria Math', serif;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .animation-container {
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+        
+        .example {
+            background-color: #f0fff0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .exercise {
+            background-color: #fff0f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .answer {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .note {
+            background-color: #fffacd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffd700;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+        
+        /* 導航選單樣式 */
+        .nav-container {
+            position: sticky;
+            top: 0;
+            background-color: var(--nav-bg);
+            padding: 10px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-menu li {
+            margin: 0 10px;
+        }
+        
+        .nav-menu a {
+            color: var(--nav-text);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            display: block;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: var(--nav-active);
+        }
+        
+        /* 回到頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .back-to-top:hover {
+            opacity: 1;
+        }
+        
+        /* 調整內容間距，適應導航 */
+        .container {
+            padding-top: 0;
+        }
+        
+        .inertia-animation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .object {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transition: transform 5s linear;
+        }
+        
+        .surface {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+        }
+        
+        .friction-high {
+            background-color: #8B4513;
+        }
+        
+        .friction-medium {
+            background-color: #A0522D;
+        }
+        
+        .friction-low {
+            background-color: #CD853F;
+        }
+        
+        .friction-none {
+            background-color: #87CEEB;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-container">
+        <ul class="nav-menu" id="nav-menu">
+            <li><a href="#intro" class="nav-link">導論</a></li>
+            <li><a href="#first-law" class="nav-link">第一運動定律</a></li>
+            <li><a href="#second-law" class="nav-link">第二運動定律</a></li>
+            <li><a href="#third-law" class="nav-link">第三運動定律</a></li>
+            <li><a href="#momentum" class="nav-link">動量守恆</a></li>
+            <li><a href="#summary" class="nav-link">總結</a></li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>牛頓運動定律與動量守恆</h1>
+            <p>探索物理學的基礎原理與應用</p>
+        </header>
+
+        <main>
+            <section class="section" id="intro">
+                <h2>導論：物理學的基石</h2>
+                <p>牛頓運動定律是理解物體運動的基本法則，由英國科學家艾薩克·牛頓（Sir Isaac Newton，1643-1727）於 1687 年在其著作《自然哲學的數學原理》中提出。這些定律描述了物體如何運動以及影響物體運動的因素，構成了經典力學的基礎。</p>
+                
+                <div class="image-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/GodfreyKneller-IsaacNewton-1689.jpg" alt="艾薩克·牛頓爵士肖像" style="max-width: 300px;">
+                    <p><em>艾薩克·牛頓爵士 (1643-1727)</em></p>
+                </div>
+                
+                <p>牛頓三大運動定律包括：</p>
+                <ol>
+                    <li><strong>慣性定律（第一運動定律）</strong>：物體在無外力作用下，會保持靜止或勻速直線運動的狀態。</li>
+                    <li><strong>加速度定律（第二運動定律）</strong>：物體的加速度與所受的外力成正比，與物體的質量成反比。</li>
+                    <li><strong>作用力與反作用力定律（第三運動定律）</strong>：當一個物體對另一個物體施加力時，後者也會對前者施加大小相等、方向相反的力。</li>
+                </ol>
+                
+                <p>這些定律不僅解釋了日常生活中的各種現象，還為太空探索、工程設計和許多現代技術提供了理論基礎。在今天的課程中，我們將詳細探討這些定律及其應用，並介紹與之相關的動量守恆定律。</p>
+            </section>
+            
+            <section class="section" id="first-law">
+                <h2>牛頓第一運動定律：慣性定律</h2>
+                
+                <div class="formula">
+                    若無外力作用於物體，則靜止的物體將保持靜止，運動的物體將保持等速直線運動。
+                </div>
+                
+                <h3>什麼是慣性？</h3>
+                <p>慣性是物體抵抗其運動狀態改變的傾向。質量越大的物體，其慣性也越大，需要更大的力才能改變其運動狀態。</p>
+                
+                <div class="note">
+                    <p>伽利略是第一個系統性研究慣性概念的科學家，而牛頓則將其正式化為運動定律。</p>
+                </div>
+                
+                <h3>慣性的視覺展示</h3>
+                <div class="animation-container">
+                    <div class="inertia-animation" id="inertia-demo">
+                        <div class="surface"></div>
+                        <div class="object" id="inertia-object" style="bottom: 30px; left: 50px;"></div>
+                    </div>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <h3>日常生活中的慣性</h3>
+                        <ul>
+                            <li>汽車急剎車時，乘客向前傾</li>
+                            <li>汽車急轉彎時，乘客向轉彎外側傾斜</li>
+                            <li>桌上的硬幣可以通過快速抽走下面的紙而保持不動</li>
+                            <li>跳傘運動員在打開降落傘前持續加速下落</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="image-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Inertia_demo_with_coin_and_card.jpg/640px-Inertia_demo_with_coin_and_card.jpg" alt="硬幣慣性演示">
+                            <p><em>快速抽走紙張，硬幣因慣性保持原位</em></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>摩擦力與慣性</h3>
+                <p>在現實世界中，我們很少能觀察到完美的慣性運動，因為總是存在摩擦力等阻力。這些力會使運動的物體最終停下來。</p>
+                
+                <div class="animation-container">
+                    <div class="inertia-animation" id="friction-demo">
+                        <div class="surface friction-high" style="bottom: 0; height: 15px;"></div>
+                        <div class="surface friction-medium" style="bottom: 15px; height: 15px;"></div>
+                        <div class="surface friction-low" style="bottom: 30px; height: 15px;"></div>
+                        <div class="surface friction-none" style="bottom: 45px; height: 15px;"></div>
+                        
+                        <div class="object" id="friction-object-1" style="bottom: 60px; left: 50px; width: 30px; height: 30px;"></div>
+                        <div class="object" id="friction-object-2" style="bottom: 75px; left: 50px; width: 30px; height: 30px;"></div>
+                        <div class="object" id="friction-object-3" style="bottom: 90px; left: 50px; width: 30px; height: 30px;"></div>
+                        <div class="object" id="friction-object-4" style="bottom: 105px; left: 50px; width: 30px; height: 30px;"></div>
+                    </div>
+                </div>
+                
+                <h3>無摩擦環境下的慣性</h3>
+                <p>在太空或真空中，由於幾乎沒有摩擦力，物體可以保持運動狀態很長時間。例如：</p>
+                <ul>
+                    <li>旅行者 1 號和 2 號探測器自 1977 年發射以來一直在太空中飛行</li>
+                    <li>國際空間站上的物體可以持續漂浮而不下落</li>
+                </ul>
+                
+                <div class="example">
+                    <h3>例子：冰上的冰球</h3>
+                    <p>冰球在冰面上可以滑行很長距離，因為冰面上的摩擦力較小。冰球一旦被擊打後，會一直滑行直到摩擦力最終使其停下。如果冰面完全光滑無摩擦，理論上冰球將永遠保持運動。</p>
+                </div>
+                
+                <div class="exercise">
+                    <h3>練習問題 1</h3>
+                    <p>一輛以 80 km/h 的速度行駛的汽車突然剎車。為什麼車內的乘客會感到向前傾？請從牛頓第一運動定律解釋這一現象。</p>
+                    <button class="btn" id="btn-1" onclick="showAnswer(1)">顯示答案</button>
+                    <div class="answer" id="answer-1">
+                        <p>根據牛頓第一運動定律（慣性定律），物體傾向於保持其運動狀態。在這種情況下，當汽車剎車時，車輛減速，但乘客的身體由於慣性，傾向於繼續以原來的速度向前運動。這就是為什麼乘客感到向前傾的原因。</p>
+                        <p>這也是為什麼汽車需要安全帶的重要原因之一，安全帶可以防止乘客在急剎車時因慣性而撞向前方物體。</p>
+                    </div>
+                </div>
+                
+                <div class="exercise">
+                    <h3>練習問題 2</h3>
+                    <p>假設在月球表面（沒有空氣阻力）上踢一個足球，與在地球上踢同一個足球相比，哪個會滾動得更遠？為什麼？</p>
+                    <button class="btn" id="btn-2" onclick="showAnswer(2)">顯示答案</button>
+                    <div class="answer" id="answer-2">
+                        <p>在月球表面踢的足球會滾動得更遠。這是因為：</p>
+                        <ol>
+                            <li>月球沒有大氣層，因此沒有空氣阻力減慢球的移動。</li>
+                            <li>月球的重力僅為地球的約 1/6，所以球與月球表面之間的摩擦力也較小。</li>
+                        </ol>
+                        <p>根據牛頓第一運動定律，沒有外力作用的物體將保持運動狀態。在月球上，阻礙足球運動的外力（摩擦力和空氣阻力）較小，因此足球可以保持運動狀態更長時間，滾動更遠的距離。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section" id="second-law">
+                <h2>牛頓第二運動定律：加速度定律</h2>
+                
+                <div class="formula">
+                    F = ma
+                </div>
+                
+                <p>其中：</p>
+                <ul>
+                    <li><strong>F</strong> 代表力（單位：牛頓，N）</li>
+                    <li><strong>m</strong> 代表質量（單位：千克，kg）</li>
+                    <li><strong>a</strong> 代表加速度（單位：米/秒²，m/s²）</li>
+                </ul>
+                
+                <h3>定律解釋</h3>
+                <p>牛頓第二運動定律告訴我們，物體的加速度與施加於它的淨外力成正比，與物體的質量成反比。換句話說：</p>
+                <ul>
+                    <li>施加的力越大，產生的加速度越大</li>
+                    <li>物體質量越大，相同的力產生的加速度越小</li>
+                </ul>
+                
+                <h3>加速度的視覺化</h3>
+                <div class="animation-container">
+                    <div id="acceleration-demo" style="position: relative; width: 100%; height: 100%;">
+                        <div style="position: absolute; bottom: 0; width: 100%; height: 20px; background-color: #333;"></div>
+                        <div id="object-small" style="position: absolute; bottom: 30px; left: 50px; width: 30px; height: 30px; background-color: var(--primary-color); border-radius: 50%;"></div>
+                        <div id="object-large" style="position: absolute; bottom: 30px; left: 50px; width: 60px; height: 60px; background-color: var(--secondary-color); border-radius: 50%;"></div>
+                    </div>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <h3>數學推導</h3>
+                        <p>牛頓第二定律可以從數學上推導出：</p>
+                        <div class="formula">
+                            F = m · a<br>
+                            a = F / m
+                        </div>
+                        <p>這表明：</p>
+                        <ul>
+                            <li>加速度與施加的力成正比</li>
+                            <li>加速度與物體的質量成反比</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="image-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Inclined_Plane_labelled.svg/640px-Inclined_Plane_labelled.svg.png" alt="斜面上的物體受力分析">
+                            <p><em>斜面上的物體受力分析 - 第二定律的應用</em></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>日常生活中的第二定律</h3>
+                <ul>
+                    <li>拉車或推車時，用力越大，車加速度越大</li>
+                    <li>同樣的力作用下，輕的物體比重的物體加速度大</li>
+                    <li>火箭發射時，燃料燃燒產生的推力使火箭加速</li>
+                    <li>自由落體運動中，物體受到重力作用而加速</li>
+                </ul>
+                
+                <div class="note">
+                    <p><strong>重要概念：</strong> 物體在重力作用下的加速度（重力加速度）約為 9.8 m/s²，通常用 g 表示。不論物體質量大小，在無空氣阻力的情況下，所有物體在地球上的自由落體加速度都相同。</p>
+                </div>
+                
+                <h3>淨力與多個力</h3>
+                <p>當多個力作用於一個物體時，物體的加速度由淨力（所有力的向量和）決定：</p>
+                
+                <div class="formula">
+                    Σ F = m · a
+                </div>
+                
+                <div class="image-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Free_body.svg/640px-Free_body.svg.png" alt="受多力作用的物體自由體圖">
+                    <p><em>受多力作用的物體自由體圖 - 計算淨力</em></p>
+                </div>
+                
+                <div class="example">
+                    <h3>例子：拖曳物體</h3>
+                    <p>一個 5 kg 的木箱放在水平地面上，施加一個 20 N 的水平力。如果地面與木箱間的摩擦力為 5 N，計算木箱的加速度。</p>
+                    <p><strong>解：</strong></p>
+                    <p>淨力 = 施加的力 - 摩擦力 = 20 N - 5 N = 15 N</p>
+                    <p>根據牛頓第二定律：a = F/m = 15 N / 5 kg = 3 m/s²</p>
+                    <p>因此，木箱的加速度為 3 m/s²。</p>
+                </div>
+                
+                <h3>力的單位</h3>
+                <p>在國際單位制（SI）中，力的單位是牛頓（N）。</p>
+                <p>1 牛頓 = 1 kg·m/s²</p>
+                <p>即：1 牛頓是使 1 千克質量的物體產生 1 米/秒² 加速度所需的力。</p>
+                
+                <div class="exercise">
+                    <h3>練習問題 3</h3>
+                    <p>一個質量為 1000 kg 的汽車，受到 5000 N 的推力，計算汽車的加速度。如果將推力增加到 10000 N，加速度會變成多少？</p>
+                    <button class="btn" id="btn-3" onclick="showAnswer(3)">顯示答案</button>
+                    <div class="answer" id="answer-3">
+                        <p><strong>第一部分：</strong></p>
+                        <p>利用牛頓第二定律：a = F/m</p>
+                        <p>a = 5000 N / 1000 kg = 5 m/s²</p>
+                        <p>因此，5000 N 的推力使汽車加速度為 5 m/s²。</p>
+                        
+                        <p><strong>第二部分：</strong></p>
+                        <p>當推力增加到 10000 N 時：</p>
+                        <p>a = 10000 N / 1000 kg = 10 m/s²</p>
+                        <p>加速度變為 10 m/s²，是原來的兩倍。這表明加速度與力成正比。</p>
+                    </div>
+                </div>
+                
+                <div class="exercise">
+                    <h3>練習問題 4</h3>
+                    <p>兩個物體，一個質量為 2 kg，另一個質量為 6 kg，分別受到相同大小 12 N 的推力。比較兩個物體的加速度。</p>
+                    <button class="btn" id="btn-4" onclick="showAnswer(4)">顯示答案</button>
+                    <div class="answer" id="answer-4">
+                        <p><strong>物體 1 (2 kg)：</strong></p>
+                        <p>a₁ = F/m₁ = 12 N / 2 kg = 6 m/s²</p>
+                        
+                        <p><strong>物體 2 (6 kg)：</strong></p>
+                        <p>a₂ = F/m₂ = 12 N / 6 kg = 2 m/s²</p>
+                        
+                        <p><strong>比較：</strong> 質量為 2 kg 的物體加速度是 6 m/s²，而質量為 6 kg 的物體加速度是 2 m/s²，比值為 3:1。質量比為 1:3，加速度比為 3:1，這表明在相同力的作用下，加速度與質量成反比。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="third-law">
+                <h2>牛頓第三運動定律：作用力與反作用力</h2>
+                
+                <div class="formula">
+                    當一個物體對另一個物體施加力時，後者也會對前者施加大小相等、方向相反的力。
+                </div>
+                
+                <h3>定律解釋</h3>
+                <p>牛頓第三運動定律表明，力總是成對出現的。當物體 A 對物體 B 施加力時（作用力），物體 B 也會對物體 A 施加相同大小但方向相反的力（反作用力）。這兩個力：</p>
+                <ul>
+                    <li>大小相等</li>
+                    <li>方向相反</li>
+                    <li>作用在不同的物體上</li>
+                    <li>同時產生和消失</li>
+                </ul>
+                
+                <div class="note">
+                    <p><strong>重要提示：</strong> 作用力和反作用力永遠作用在兩個不同的物體上，所以它們不會相互抵消。</p>
+                </div>
+                
+                <h3>視覺展示</h3>
+                <div class="animation-container">
+                    <div id="third-law-demo" style="position: relative; width: 100%; height: 100%;">
+                        <div style="position: absolute; bottom: 0; width: 100%; height: 20px; background-color: #333;"></div>
+                        <div id="object-a" style="position: absolute; bottom: 30px; left: 200px; width: 80px; height: 80px; background-color: var(--primary-color); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">A</div>
+                        <div id="object-b" style="position: absolute; bottom: 30px; left: 400px; width: 80px; height: 80px; background-color: var(--secondary-color); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">B</div>
+                        
+                        <div id="force-arrow-a" style="position: absolute; bottom: 70px; left: 290px; height: 2px; width: 100px; background-color: red; display: none;">
+                            <div style="position: absolute; right: 0; top: -4px; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 10px solid red;"></div>
+                        </div>
+                        
+                        <div id="force-arrow-b" style="position: absolute; bottom: 70px; left: 290px; height: 2px; width: 100px; background-color: blue; display: none;">
+                            <div style="position: absolute; left: 0; top: -4px; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-right: 10px solid blue;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <h3>日常生活中的第三定律</h3>
+                        <ul>
+                            <li>游泳時，人向後推水，水也向前推人</li>
+                            <li>行走時，腳向後推地面，地面向前推腳</li>
+                            <li>火箭發射時，火箭排出高速氣體向後，氣體推動火箭向前</li>
+                            <li>打網球時，球拍擊打球的同時，球也對球拍施加力</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="image-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/STS-132_Atlantis_launching_from_KSC.jpg/640px-STS-132_Atlantis_launching_from_KSC.jpg" alt="火箭發射 - 牛頓第三定律應用">
+                            <p><em>火箭發射：排出氣體（作用力）推動火箭上升（反作用力）</em></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h3>例子：彈簧測力計</h3>
+                    <p>兩個相同的彈簧測力計背對背連接。如果拉其中一個測力計，觀察會發現兩個測力計顯示的數值完全相同。這證明了作用力和反作用力大小相等、方向相反。一個測力計記錄了作用力，另一個記錄了反作用力。</p>
+                </div>
+                
+                <h3>常見誤解</h3>
+                <p>很多人誤解作用力和反作用力會相互抵消，但實際上：</p>
+                <ul>
+                    <li>作用力和反作用力作用在不同的物體上</li>
+                    <li>雖然這兩個力大小相等、方向相反，但它們不是作用在同一物體上，所以不會相互抵消</li>
+                    <li>要判斷物體是否運動，需要分析作用在該物體上的所有力，即淨力</li>
+                </ul>
+                
+                <div class="note">
+                    <p>平衡狀態下，一個物體上的所有力的合力為零，但這是由於作用在同一物體上的不同力相互抵消，而非由於作用力與反作用力抵消（因為反作用力作用在另一個物體上）。</p>
+                </div>
+                
+                <div class="exercise">
+                    <h3>練習問題 5</h3>
+                    <p>一個人站在地面上，體重為 600 牛頓。根據牛頓第三定律，地面對這個人施加多大的力？這個力的方向是什麼？</p>
+                    <button class="btn" id="btn-5" onclick="showAnswer(5)">顯示答案</button>
+                    <div class="answer" id="answer-5">
+                        <p>根據牛頓第三定律，當一個物體對另一個物體施加力時，後者也會對前者施加大小相等、方向相反的力。</p>
+                        <p>在這個例子中：</p>
+                        <ul>
+                            <li>人對地面施加 600 牛頓的向下的力（作用力）</li>
+                            <li>地面對人施加 600 牛頓的向上的力（反作用力）</li>
+                        </ul>
+                        <p>因此，地面對人施加的力大小為 600 牛頓，方向向上。</p>
+                        <p>這個向上的力使人不會下沉到地面中，實現了靜止平衡。</p>
+                    </div>
+                </div>
+                
+                <div class="exercise">
+                    <h3>練習問題 6</h3>
+                    <p>一個 50 kg 的人在冰面上推一個 5 kg 的箱子，施加 20 N 的水平力。根據牛頓第三定律，箱子對人施加多大的力？如果冰面光滑（可忽略摩擦），人和箱子的加速度分別是多少？</p>
+                    <button class="btn" id="btn-6" onclick="showAnswer(6)">顯示答案</button>
+                    <div class="answer" id="answer-6">
+                        <p><strong>第一部分：</strong></p>
+                        <p>根據牛頓第三定律，當人對箱子施加 20 N 的力時，箱子也會對人施加大小相等、方向相反的力，即 20 N 向反方向。</p>
+                        
+                        <p><strong>第二部分：</strong></p>
+                        <p>對於箱子（質量 5 kg）：</p>
+                        <p>受到的力 = 20 N</p>
+                        <p>根據第二定律：a箱 = F/m = 20 N / 5 kg = 4 m/s²</p>
+                        <p>箱子的加速度為 4 m/s²，方向與人推的方向相同。</p>
+                        
+                        <p>對於人（質量 50 kg）：</p>
+                        <p>受到的力 = 20 N（箱子對人的反作用力）</p>
+                        <p>根據第二定律：a人 = F/m = 20 N / 50 kg = 0.4 m/s²</p>
+                        <p>人的加速度為 0.4 m/s²，方向與推箱子的方向相反。</p>
+                        
+                        <p>注意：這就是為什麼當你站在冰面上推東西時，你自己也會向後滑動。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="momentum">
+                <h2>動量守恆定律</h2>
+                
+                <div class="formula">
+                    在無外力作用的封閉系統中，系統的總動量保持不變。
+                </div>
+                
+                <h3>什麼是動量？</h3>
+                <p>動量是質量與速度的乘積，是一個向量，具有大小和方向。物理學中用符號 p 表示。</p>
+                
+                <div class="formula">
+                    p = m · v
+                </div>
+                
+                <p>其中：</p>
+                <ul>
+                    <li><strong>p</strong> 代表動量（單位：kg·m/s）</li>
+                    <li><strong>m</strong> 代表質量（單位：kg）</li>
+                    <li><strong>v</strong> 代表速度（單位：m/s）</li>
+                </ul>
+                
+                <p>動量越大，改變物體運動狀態所需的力也越大。例如：</p>
+                <ul>
+                    <li>移動一個靜止的保齡球比移動一個靜止的網球更困難（質量影響）</li>
+                    <li>停下一輛高速行駛的卡車比停下同一輛低速行駛的卡車更困難（速度影響）</li>
+                </ul>
+                
+                <h3>動量與牛頓第二定律的關係</h3>
+                <p>牛頓第二定律也可以用動量的變化率來表示：</p>
+                
+                <div class="formula">
+                    F = Δp/Δt
+                </div>
+                
+                <p>這個公式表明，力等於動量隨時間的變化率。當質量不變時，這個公式簡化為我們熟悉的 F = ma。</p>
+                
+                <h3>動量守恆定律的視覺展示</h3>
+                <div class="animation-container">
+                    <div id="momentum-demo" style="position: relative; width: 100%; height: 100%;">
+                        <div style="position: absolute; bottom: 0; width: 100%; height: 20px; background-color: #333;"></div>
+                        <div id="momentum-object-1" style="position: absolute; bottom: 30px; left: 100px; width: 50px; height: 50px; background-color: var(--primary-color); border-radius: 50%;"></div>
+                        <div id="momentum-object-2" style="position: absolute; bottom: 30px; left: 500px; width: 70px; height: 70px; background-color: var(--secondary-color); border-radius: 50%;"></div>
+                    </div>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <h3>動量守恆的數學表達</h3>
+                        <p>對於碰撞前後的系統：</p>
+                        <div class="formula">
+                            m₁v₁ + m₂v₂ = m₁v₁' + m₂v₂'
+                        </div>
+                        <p>其中：</p>
+                        <ul>
+                            <li>m₁, m₂ 是物體的質量</li>
+                            <li>v₁, v₂ 是碰撞前的速度</li>
+                            <li>v₁', v₂' 是碰撞後的速度</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="image-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Momentum_conservation.svg/640px-Momentum_conservation.svg.png" alt="動量守恆示意圖">
+                            <p><em>碰撞過程中的動量守恆</em></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>碰撞類型</h3>
+                <p>碰撞可以分為兩種主要類型：</p>
+                
+                <h4>1. 彈性碰撞</h4>
+                <p>在彈性碰撞中，不僅動量守恆，而且動能也守恆。碰撞後，物體分開，沒有能量損失。</p>
+                <p>例如：理想條件下的台球碰撞、原子粒子碰撞等。</p>
+                
+                <h4>2. 非彈性碰撞</h4>
+                <p>在非彈性碰撞中，動量守恆，但動能不守恆（部分能量轉換為熱能、聲能等）。</p>
+                <p>極限情況是完全非彈性碰撞，碰撞後物體黏在一起，共同運動。</p>
+                <p>例如：汽車碰撞、黏土球碰撞等。</p>
+                
+                <div class="example">
+                    <h3>例子：台球碰撞</h3>
+                    <p>在台球桌上，一個移動的球（球1）擊中一個靜止的球（球2）。假設兩球質量相同，碰撞為彈性碰撞，且球1正好擊中球2的中心。</p>
+                    <p>根據動量守恆定律：</p>
+                    <p>碰撞前：m·v₁ + m·0 = m·v₁</p>
+                    <p>碰撞後：m·v₁' + m·v₂' = m·v₁</p>
+                    <p>由於是彈性碰撞，動能也守恆，結合這兩個條件，可以證明：v₁' = 0，v₂' = v₁</p>
+                    <p>結果：球1停止，球2以球1原來的速度移動。這就是為什麼在完美的台球擊球中，白球會在擊中目標球後停止，而目標球則繼續運動。</p>
+                </div>
+                
+                <h3>日常生活中的動量守恆</h3>
+                <ul>
+                    <li>火箭發射：火箭向後排出氣體，自身向前運動</li>
+                    <li>槍的後座力：子彈向前，槍向後</li>
+                    <li>跳入水中：人向下，水被推開向上</li>
+                    <li>溜冰者互相推開：兩人朝相反方向滑行</li>
+                </ul>
+                
+                <div class="note">
+                    <p><strong>重要概念：</strong> 動量守恆是物理學中最基本的守恆定律之一，在量子力學和相對論中仍然適用。</p>
+                </div>
+                
+                <div class="exercise">
+                    <h3>練習問題 7</h3>
+                    <p>一個質量為 60 kg 的溜冰者靜止在冰面上，接住一個質量為 0.5 kg、速度為 20 m/s 的球。溜冰者接住球後的速度是多少？（假設冰面無摩擦）</p>
+                    <button class="btn" id="btn-7" onclick="showAnswer(7)">顯示答案</button>
+                    <div class="answer" id="answer-7">
+                        <p>根據動量守恆定律，碰撞前後系統的總動量保持不變。</p>
+                        <p><strong>碰撞前：</strong></p>
+                        <p>球的動量：p球 = m球 · v球 = 0.5 kg · 20 m/s = 10 kg·m/s</p>
+                        <p>溜冰者的動量：p溜冰者 = m溜冰者 · v溜冰者 = 60 kg · 0 m/s = 0 kg·m/s</p>
+                        <p>總動量：ptotal = 10 kg·m/s</p>
+                        
+                        <p><strong>碰撞後：</strong></p>
+                        <p>球和溜冰者一起運動，總質量：mtotal = 60 kg + 0.5 kg = 60.5 kg</p>
+                        <p>根據動量守恆：mtotal · v' = ptotal</p>
+                        <p>v' = ptotal / mtotal = 10 kg·m/s / 60.5 kg ≈ 0.165 m/s</p>
+                        
+                        <p>因此，溜冰者接住球後的速度約為 0.165 m/s。</p>
+                    </div>
+                </div>
+                
+                <div class="exercise">
+                    <h3>練習問題 8</h3>
+                    <p>一個質量為 1000 kg 的小汽車以 20 m/s 的速度與一個質量為 2000 kg、速度為 -15 m/s 的麵包車正面相撞（負號表示方向相反）。如果碰撞後兩車黏在一起，求碰撞後的速度。</p>
+                    <button class="btn" id="btn-8" onclick="showAnswer(8)">顯示答案</button>
+                    <div class="answer" id="answer-8">
+                        <p>這是一個完全非彈性碰撞的例子。根據動量守恆定律：</p>
+                        
+                        <p><strong>碰撞前：</strong></p>
+                        <p>小汽車的動量：p1 = m1 · v1 = 1000 kg · 20 m/s = 20000 kg·m/s</p>
+                        <p>麵包車的動量：p2 = m2 · v2 = 2000 kg · (-15 m/s) = -30000 kg·m/s</p>
+                        <p>總動量：ptotal = p1 + p2 = 20000 kg·m/s + (-30000 kg·m/s) = -10000 kg·m/s</p>
+                        
+                        <p><strong>碰撞後：</strong></p>
+                        <p>兩車黏在一起，總質量：mtotal = m1 + m2 = 1000 kg + 2000 kg = 3000 kg</p>
+                        <p>根據動量守恆：mtotal · v' = ptotal</p>
+                        <p>v' = ptotal / mtotal = -10000 kg·m/s / 3000 kg ≈ -3.33 m/s</p>
+                        
+                        <p>碰撞後，兩車以約 3.33 m/s 的速度朝麵包車原來的運動方向移動。負號表示與小汽車原來的運動方向相反。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section" id="summary">
+                <h2>總結與應用</h2>
+                
+                <h3>牛頓運動定律與動量守恆的聯繫</h3>
+                <p>牛頓三大運動定律和動量守恆定律共同構成了經典力學的基石：</p>
+                <ul>
+                    <li>第一定律（慣性定律）告訴我們物體保持運動狀態的傾向</li>
+                    <li>第二定律（F = ma）告訴我們力如何改變物體的運動</li>
+                    <li>第三定律（作用力與反作用力）引出了動量守恆的概念</li>
+                    <li>動量守恆定律是第三定律的自然結果，並擴展到多物體系統</li>
+                </ul>
+                
+                <h3>重要應用領域</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>工程應用</h4>
+                        <ul>
+                            <li>汽車安全設計（安全帶、氣囊、吸能區）</li>
+                            <li>橋樑和建築物結構設計</li>
+                            <li>火箭和航空推進系統</li>
+                            <li>機械設備和傳動系統</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>日常生活</h4>
+                        <ul>
+                            <li>運動技巧（投籃、踢足球、游泳）</li>
+                            <li>交通工具的加速和減速</li>
+                            <li>平衡和穩定性（自行車、走路）</li>
+                            <li>物體的碰撞和反彈</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="note">
+                    <p>牛頓運動定律雖然在日常速度和尺度下非常準確，但在接近光速或微觀尺度下需要被相對論和量子力學修正。然而，它們仍然是物理學基礎教育的核心，並且對於大多數工程和日常應用足夠精確。</p>
+                </div>
+                
+                <h3>深入思考</h3>
+                <p>牛頓運動定律不僅是物理公式，還是理解自然界運動的哲學。它們告訴我們：</p>
+                <ul>
+                    <li>自然界有規律可循，物體的運動可以通過數學方程描述</li>
+                    <li>一切運動的改變都有原因（力），不會憑空產生</li>
+                    <li>自然界存在守恆量（如動量），這些守恆量提供了理解複雜系統的方法</li>
+                </ul>
+                
+                <p>通過學習這些基本定律，我們不僅能解決物理問題，還能培養邏輯思維和科學思考方式，這些能力將有助於我們理解和解決生活中各種問題。</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2023 物理教育資源 | 互動式學習教材</p>
+        </footer>
+    </div>
+    
+    <a href="#" class="back-to-top" title="回到頂部">↑</a>
+
+    <script>
+        // 顯示答案的函數
+        function showAnswer(id) {
+            const answer = document.getElementById(`answer-${id}`);
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                document.getElementById(`btn-${id}`).textContent = '顯示答案';
+            } else {
+                answer.style.display = 'block';
+                document.getElementById(`btn-${id}`).textContent = '隱藏答案';
+            }
+        }
+
+        // 慣性動畫
+        document.addEventListener('DOMContentLoaded', function() {
+            // 第一個慣性演示
+            const inertiaObject = document.getElementById('inertia-object');
+            
+            function startInertiaAnimation() {
+                inertiaObject.style.transform = 'translateX(0px)';
+                setTimeout(() => {
+                    inertiaObject.style.transform = 'translateX(600px)';
+                }, 500);
+                
+                // 重置動畫
+                setTimeout(startInertiaAnimation, 6000);
+            }
+            
+            // 摩擦力演示
+            const frictionObject1 = document.getElementById('friction-object-1');
+            const frictionObject2 = document.getElementById('friction-object-2');
+            const frictionObject3 = document.getElementById('friction-object-3');
+            const frictionObject4 = document.getElementById('friction-object-4');
+            
+            function startFrictionAnimation() {
+                // 重置位置
+                frictionObject1.style.transform = 'translateX(0px)';
+                frictionObject2.style.transform = 'translateX(0px)';
+                frictionObject3.style.transform = 'translateX(0px)';
+                frictionObject4.style.transform = 'translateX(0px)';
+                
+                setTimeout(() => {
+                    // 高摩擦 - 移動很短距離
+                    frictionObject1.style.transition = 'transform 1s ease-out';
+                    frictionObject1.style.transform = 'translateX(100px)';
+                    
+                    // 中等摩擦 - 移動中等距離
+                    frictionObject2.style.transition = 'transform 2s ease-out';
+                    frictionObject2.style.transform = 'translateX(200px)';
+                    
+                    // 低摩擦 - 移動較長距離
+                    frictionObject3.style.transition = 'transform 3s ease-out';
+                    frictionObject3.style.transform = 'translateX(400px)';
+                    
+                    // 無摩擦 - 持續移動
+                    frictionObject4.style.transition = 'transform 5s linear';
+                    frictionObject4.style.transform = 'translateX(600px)';
+                }, 1000);
+                
+                // 重置動畫
+                setTimeout(startFrictionAnimation, 7000);
+            }
+            
+            // 啟動動畫
+            startInertiaAnimation();
+            startFrictionAnimation();
+        });
+
+        // 加速度動畫
+        function startAccelerationAnimation() {
+            const smallObj = document.getElementById('object-small');
+            const largeObj = document.getElementById('object-large');
+            
+            // 重置位置
+            smallObj.style.transition = 'none';
+            largeObj.style.transition = 'none';
+            smallObj.style.transform = 'translateX(0)';
+            largeObj.style.transform = 'translateX(0)';
+            
+            setTimeout(() => {
+                // 小質量物體 - 加速度大
+                smallObj.style.transition = 'transform 3s ease-in';
+                smallObj.style.transform = 'translateX(500px)';
+                
+                // 大質量物體 - 加速度小
+                largeObj.style.transition = 'transform 5s ease-in';
+                largeObj.style.transform = 'translateX(300px)';
+            }, 500);
+            
+            // 重置動畫
+            setTimeout(startAccelerationAnimation, 6000);
+        }
+        
+        // 第三定律動畫
+        function startThirdLawAnimation() {
+            const objectA = document.getElementById('object-a');
+            const objectB = document.getElementById('object-b');
+            const forceArrowA = document.getElementById('force-arrow-a');
+            const forceArrowB = document.getElementById('force-arrow-b');
+            
+            // 重置位置
+            objectA.style.transition = 'none';
+            objectB.style.transition = 'none';
+            objectA.style.transform = 'translateX(0)';
+            objectB.style.transform = 'translateX(0)';
+            forceArrowA.style.display = 'none';
+            forceArrowB.style.display = 'none';
+            
+            setTimeout(() => {
+                // 顯示力的箭頭
+                forceArrowA.style.display = 'block';
+                forceArrowB.style.display = 'block';
+                
+                // 物體移動
+                objectA.style.transition = 'transform 2s ease-out';
+                objectB.style.transition = 'transform 2s ease-out';
+                objectA.style.transform = 'translateX(-50px)';
+                objectB.style.transform = 'translateX(50px)';
+            }, 1000);
+            
+            setTimeout(() => {
+                forceArrowA.style.display = 'none';
+                forceArrowB.style.display = 'none';
+            }, 3000);
+            
+            // 重置動畫
+            setTimeout(startThirdLawAnimation, 5000);
+        }
+        
+        // 動量守恆動畫
+        function startMomentumAnimation() {
+            const object1 = document.getElementById('momentum-object-1');
+            const object2 = document.getElementById('momentum-object-2');
+            
+            // 重置位置
+            object1.style.transition = 'none';
+            object2.style.transition = 'none';
+            object1.style.transform = 'translateX(0)';
+            object2.style.transform = 'translateX(0)';
+            
+            setTimeout(() => {
+                // 第一個物體（小球）快速移動向右
+                object1.style.transition = 'transform 2s linear';
+                object1.style.transform = 'translateX(300px)';
+                
+                // 碰撞後
+                setTimeout(() => {
+                    // 小球減速或停止
+                    object1.style.transition = 'transform 1.5s linear';
+                    object1.style.transform = 'translateX(350px)';
+                    
+                    // 大球開始移動
+                    object2.style.transition = 'transform 3s linear';
+                    object2.style.transform = 'translateX(150px)';
+                }, 2000);
+            }, 1000);
+            
+            // 重置動畫
+            setTimeout(startMomentumAnimation, 7000);
+        }
+        
+        // 啟動所有動畫
+        document.addEventListener('DOMContentLoaded', function() {
+            // 導航選單高亮顯示功能
+            const sections = document.querySelectorAll('section.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // 監聽滾動事件，更新當前導航選單
+            window.addEventListener('scroll', function() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if(pageYOffset >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // 第一個慣性演示
+            const inertiaObject = document.getElementById('inertia-object');
+            
+            function startInertiaAnimation() {
+                inertiaObject.style.transform = 'translateX(0px)';
+                setTimeout(() => {
+                    inertiaObject.style.transform = 'translateX(600px)';
+                }, 500);
+                
+                // 重置動畫
+                setTimeout(startInertiaAnimation, 6000);
+            }
+            
+            // 摩擦力演示
+            const frictionObject1 = document.getElementById('friction-object-1');
+            const frictionObject2 = document.getElementById('friction-object-2');
+            const frictionObject3 = document.getElementById('friction-object-3');
+            const frictionObject4 = document.getElementById('friction-object-4');
+            
+            function startFrictionAnimation() {
+                // 重置位置
+                frictionObject1.style.transform = 'translateX(0px)';
+                frictionObject2.style.transform = 'translateX(0px)';
+                frictionObject3.style.transform = 'translateX(0px)';
+                frictionObject4.style.transform = 'translateX(0px)';
+                
+                setTimeout(() => {
+                    // 高摩擦 - 移動很短距離
+                    frictionObject1.style.transition = 'transform 1s ease-out';
+                    frictionObject1.style.transform = 'translateX(100px)';
+                    
+                    // 中等摩擦 - 移動中等距離
+                    frictionObject2.style.transition = 'transform 2s ease-out';
+                    frictionObject2.style.transform = 'translateX(200px)';
+                    
+                    // 低摩擦 - 移動較長距離
+                    frictionObject3.style.transition = 'transform 3s ease-out';
+                    frictionObject3.style.transform = 'translateX(400px)';
+                    
+                    // 無摩擦 - 持續移動
+                    frictionObject4.style.transition = 'transform 5s linear';
+                    frictionObject4.style.transform = 'translateX(600px)';
+                }, 1000);
+                
+                // 重置動畫
+                setTimeout(startFrictionAnimation, 7000);
+            }
+            
+            // 啟動所有動畫
+            startInertiaAnimation();
+            startFrictionAnimation();
+            startAccelerationAnimation();
+            startThirdLawAnimation();
+            startMomentumAnimation();
+        });
+    </script>
+</body>
+</html> 
